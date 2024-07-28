@@ -8,22 +8,31 @@ import {
 } from "./MainLayout.styled";
 import {
 	MdAttachMoney,
+	MdClose,
 	MdDocumentScanner,
 	MdEditDocument,
 	MdHomeRepairService,
 	MdHouse,
 	MdLogout,
+	MdMenu,
 } from "react-icons/md";
 import useLogout from "../../auth/useLogout";
 import { useDispatch } from "react-redux";
 import { addToast } from "../../app/toastSlice";
+import { forwardRef, useRef, useState } from "react";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 const MainLayout = () => {
+	const [navOpen, setNavOpen] = useState(false);
+	const navRef = useRef();
+
+	useOutsideClick(navRef, () => setNavOpen(false));
+
 	return (
 		<StyledLayout>
-			<Header />
+			<Header navOpen={navOpen} setNavOpen={setNavOpen} />
 			<StyledBody>
-				<Nav />
+				<Nav ref={navRef} navOpen={navOpen} />
 				<StyledOutlet>
 					<Outlet />
 				</StyledOutlet>
@@ -32,17 +41,30 @@ const MainLayout = () => {
 	);
 };
 
-const Header = () => {
+const Header = ({ navOpen, setNavOpen }) => {
+	const navigate = useNavigate();
+
+	const handleClick = () => {
+		setNavOpen(!navOpen);
+	};
+
 	return (
 		<StyledHeader>
-			<Link to="/">
-				<img src="/images/light-logo.svg" alt="Zameen Management" />
-			</Link>
+			<img
+				onClick={() => navigate("/")}
+				src="/images/light-logo.svg"
+				alt="Zameen Management"
+			/>
+			{navOpen ? (
+				<MdClose onClick={handleClick} />
+			) : (
+				<MdMenu onClick={handleClick} />
+			)}
 		</StyledHeader>
 	);
 };
 
-const Nav = () => {
+const Nav = forwardRef(({ navOpen }, ref) => {
 	const dispatch = useDispatch();
 	const logout = useLogout();
 	const navigate = useNavigate();
@@ -64,7 +86,7 @@ const Nav = () => {
 		}
 	};
 	return (
-		<StyledNav>
+		<StyledNav ref={ref} $navOpen={navOpen}>
 			<p className="text-sm">Menu</p>
 			<div className="column gap-1">
 				<NavLink to="/">
@@ -95,6 +117,6 @@ const Nav = () => {
 			</div>
 		</StyledNav>
 	);
-};
+});
 
 export default MainLayout;

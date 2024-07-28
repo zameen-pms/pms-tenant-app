@@ -11,11 +11,26 @@ export const StyledHeader = styled.header`
 	height: 75px;
 	background: var(--dark-gray);
 	padding: 1rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 
-	a {
-		img {
-			height: 100%;
-			width: auto;
+	img {
+		height: 100%;
+		width: auto;
+		cursor: pointer;
+	}
+
+	svg {
+		display: none;
+		color: var(--primary);
+		width: 35px;
+		height: 35px;
+		cursor: pointer;
+
+		@media (max-width: 1080px) {
+			display: block;
 		}
 	}
 `;
@@ -32,6 +47,21 @@ export const StyledNav = styled.nav`
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
+	position: relative;
+	z-index: 1000;
+	transition: all 0.25s ease-in-out;
+
+	@media (max-width: 1080px) {
+		position: fixed;
+		top: 75px;
+		left: ${(props) => (props.$navOpen ? "0" : "-300px")};
+		height: calc(100vh - 75px);
+	}
+
+	@media (max-width: 500px) {
+		width: 100vw;
+		left: ${(props) => (props.$navOpen ? "0" : "-100vw")};
+	}
 
 	a {
 		display: flex;

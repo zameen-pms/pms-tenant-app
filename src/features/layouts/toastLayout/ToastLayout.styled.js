@@ -9,7 +9,7 @@ export const StyledToastLayout = styled.section`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	z-index: 1000;
+	z-index: 100;
 `;
 
 export const StyledToast = styled.div`
