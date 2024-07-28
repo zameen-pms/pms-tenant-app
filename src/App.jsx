@@ -7,6 +7,7 @@ import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import PersistLogin from "./features/auth/PersistLogin";
 import RequireAuth from "./features/auth/RequireAuth";
 import MainLayout from "./features/layouts/mainLayout/MainLayout";
+import OverviewPage from "./pages/overview";
 
 const App = () => {
 	return (
@@ -25,6 +26,7 @@ const App = () => {
 					<Route element={<PersistLogin />}>
 						<Route element={<RequireAuth />}>
 							<Route index element={<HomePage />} />
+							<Route path="overview" element={<OverviewPage />} />
 						</Route>
 					</Route>
 				</Route>

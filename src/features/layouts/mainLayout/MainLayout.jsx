@@ -89,9 +89,9 @@ const Nav = forwardRef(({ navOpen }, ref) => {
 		<StyledNav ref={ref} $navOpen={navOpen}>
 			<p className="text-sm">Menu</p>
 			<div className="column gap-1">
-				<NavLink to="/">
+				<NavLink to="/overview">
 					<MdHouse />
-					Home
+					Overview
 				</NavLink>
 				<NavLink to="/payments">
 					<MdAttachMoney />
